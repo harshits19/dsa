@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 /*
 Prime numbers are those which are divisible by 1 and itself only.
@@ -6,8 +7,7 @@ eg. 2,5,7,11,13,17,19,23,29
 */
 
 // Naive Solution, Time: O(n)
-bool isPrime(int num)
-{
+bool isPrime(int num) {
     if (num == 1)
         return false;
     for (int i = 2; i < num; i++) // checking for n=2 to n-1 if number is divisible by any of the non prime numbers then it is non prime
@@ -28,8 +28,7 @@ we can say that for a pair(x,y), x*y = n
 
 */
 // Efficient Solution, Time: O(root(n))
-bool primeCheck(int num)
-{
+bool primeCheck(int num) {
     if (num == 1)
         return false;
     for (int i = 2; i * i <= num; i++) // i < root(num) == i*i < num
@@ -41,26 +40,34 @@ bool primeCheck(int num)
 }
 
 // Improved Solution
-bool primeImproved(int num)
-{
+bool primeImproved(int num) {
     if (num == 1)
         return false;
     if (num == 2 || num == 3)
         return true;
     if (num % 2 == 0 || num % 3 == 0)
         return false;
-    for (int i = 5; i * i <= num; i = i + 6)
-    {
-        if (num % i == 0)
+    for (int i = 5; i * i <= num; i += 6) {
+        if (num % i == 0 || num % (i + 2) == 0)
             return false;
     }
     return true;
 }
-int main()
-{
+int main() {
     int n = 25, q = 37, r = 229;
-    cout << n << " is Prime: " << (isPrime(n) > 0 ? "True" : "False") << endl;
-    cout << q << " is Prime: " << (primeCheck(q) > 0 ? "True" : "False") << endl;
-    cout << r << " is Prime: " << (primeImproved(r) > 0 ? "True" : "False") << endl;
+    cout << n << " is Prime : " << (isPrime(n) > 0 ? "True" : "False") << endl;
+    cout << q << " is Prime : " << (primeCheck(q) > 0 ? "True" : "False") << endl;
+    cout << r << " is Prime : " << (primeImproved(r) > 0 ? "True" : "False") << endl;
+
+    // print prime numbers between 1 to n
+    int k = 100;
+    vector<int> res;
+    for (int i = 1; i < k; i++)
+        if (primeImproved(i))
+            res.push_back(i);
+
+    for (auto a : res)
+        cout << a << " ";
+
     return 0;
 }
